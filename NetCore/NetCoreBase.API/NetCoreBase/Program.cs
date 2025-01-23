@@ -1,4 +1,7 @@
 
+using Microsoft.EntityFrameworkCore;
+using NetCoreBase.Infrastructure.Data.Postgresql;
+
 namespace NetCoreBase
 {
     public class Program
@@ -14,6 +17,9 @@ namespace NetCoreBase
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"), b=>b.MigrationsAssembly("NetCoreBase.Infrastructure")));
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -21,6 +27,7 @@ namespace NetCoreBase
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+                app.UseDeveloperExceptionPage();
             }
 
             app.UseHttpsRedirection();
