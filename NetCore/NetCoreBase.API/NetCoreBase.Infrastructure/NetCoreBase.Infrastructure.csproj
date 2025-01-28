@@ -20,4 +20,8 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.10" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\NetCoreBase.Domain\NetCoreBase.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

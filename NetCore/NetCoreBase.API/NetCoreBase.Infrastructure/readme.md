@@ -1,4 +1,13 @@
+# Infrastructure Layer
 
+The Infrastructure Layer in Clean Architecture should contain:
+
+Data Access (Repositories): Implementations for data access.
+Database Context: ORM context for interacting with the database.
+Entity Configurations: Schema and relationship configurations for entities.
+External Services: Implementations for external services and APIs.
+Migrations: Database migrations for schema changes.
+Dependency Injection: Registration of services and repositories in the DI container.
 
 
 dotnet-ef.exe migrations add initial -p ..\..\NetCoreBase.Infrastructure.csproj -c ApplicationDbContext -s ..\..\..\NetCoreBase\ -o ..\..\Data\Migrations

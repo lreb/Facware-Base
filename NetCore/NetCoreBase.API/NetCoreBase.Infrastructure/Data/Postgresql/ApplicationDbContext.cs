@@ -1,11 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NetCoreBase.Infrastructure.Data.Seeds;
-using NetCoreBase.Infrastructure.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using NetCoreBase.Domain.Entities;
 
 namespace NetCoreBase.Infrastructure.Data.Postgresql
 {
