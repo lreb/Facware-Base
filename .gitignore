@@ -1,0 +1,37 @@
+# .gitignore
+
+# Angular
+node_modules/
+dist/
+tmp/
+temp/
+*.log
+*.tsbuildinfo
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.log
+*.env
+*.venv
+*.pytest_cache/
+*.mypy_cache/
+*.coverage
+.coverage.*
+
+# .NET
+bin/
+obj/
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+*.log
+*.vs/
+.vscode/
