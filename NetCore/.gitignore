@@ -3,6 +3,9 @@ bin/
 obj/
 out/
 
+# ignore local environment env file
+/NetCoreBase.API/NetCoreBase/appsettings.Local.json
+
 # User-specific files
 *.rsuser
 *.suo

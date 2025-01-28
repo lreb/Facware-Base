@@ -1,0 +1,142 @@
+{
+	"info": {
+		"_postman_id": "886032bb-7f90-4af6-a32b-cf826af1f56e",
+		"name": "Facware-Base",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "274059"
+	},
+	"item": [
+		{
+			"name": "Items",
+			"item": [
+				{
+					"name": "localhost:50140/api/todos/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:50140/api/todos/",
+							"host": [
+								"localhost"
+							],
+							"port": "50140",
+							"path": [
+								"api",
+								"todos",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Item",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{host}}/item/2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"item",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:50140/api/todos",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"something 2\"\n}"
+						},
+						"url": {
+							"raw": "localhost:50140/api/todos",
+							"host": [
+								"localhost"
+							],
+							"port": "50140",
+							"path": [
+								"api",
+								"todos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:50140/api/todos/2",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 2,\n    \"name\": \"something 2.2\",\n    \"isComplete\": true\n}"
+						},
+						"url": {
+							"raw": "localhost:50140/api/todos/2",
+							"host": [
+								"localhost"
+							],
+							"port": "50140",
+							"path": [
+								"api",
+								"todos",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:50140/api/todos/2",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "localhost:50140/api/todos/2",
+							"host": [
+								"localhost"
+							],
+							"port": "50140",
+							"path": [
+								"api",
+								"todos",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
