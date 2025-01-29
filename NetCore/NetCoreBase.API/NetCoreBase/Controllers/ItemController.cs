@@ -1,9 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using NetCoreBase.Application.Queries.GetByIdItemHandler;
+using NetCoreBase.Application.Queries.GetItemById;
 using NetCoreBase.Domain.Entities;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-using static NetCoreBase.Application.Queries.GetByIdItemHandler.ItemGetByIdQuery;
 
 namespace NetCoreBase.Controllers
 {
@@ -21,7 +20,7 @@ namespace NetCoreBase.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Index(int id)
         {
-            var query = new ItemGetByIdQuery { Id = id };
+            var query = new GetItemByIdRequest { Id = id };
             var item = await _mediator.Send(query);
             return Ok(item);
         }
