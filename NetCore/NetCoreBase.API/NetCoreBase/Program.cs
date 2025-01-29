@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using NetCoreBase.Application.Queries.GetItemById;
 using NetCoreBase.Extensions;
 using NetCoreBase.Infrastructure.Data.Postgresql;
+using FluentValidation;
 
 namespace NetCoreBase
 {
@@ -35,6 +36,8 @@ namespace NetCoreBase
             options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("NetCoreBase.Infrastructure")));
             //automapper
             builder.Services.AddAutoMapper(typeof(CustomMappingProfile).Assembly);
+            // fluent validation
+            builder.Services.AddScoped<IValidator<GetItemByIdRequest>, GetByIdItemValidator>();
 
             var app = builder.Build();
 

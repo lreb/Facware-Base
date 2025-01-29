@@ -25,3 +25,8 @@ dotnet restore
 ``` bash
 dotnet.exe run --project .\NetCoreBase.API\NetCoreBase\NetCoreBase.csproj --environment "Local"
 ```
+
+add packages
+```bash
+dotnet add --project NetCoreBase.Application/NetCoreBase.Application.csproj package FluentValidation 
+```
