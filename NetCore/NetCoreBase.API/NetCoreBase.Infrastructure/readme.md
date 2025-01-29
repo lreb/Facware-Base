@@ -9,6 +9,9 @@ External Services: Implementations for external services and APIs.
 Migrations: Database migrations for schema changes.
 Dependency Injection: Registration of services and repositories in the DI container.
 
+Install dotnet-ef
+`https://learn.microsoft.com/en-us/ef/core/cli/dotnet`
+
 
 dotnet-ef.exe migrations add initial -p ..\..\NetCoreBase.Infrastructure.csproj -c ApplicationDbContext -s ..\..\..\NetCoreBase\ -o ..\..\Data\Migrations
 

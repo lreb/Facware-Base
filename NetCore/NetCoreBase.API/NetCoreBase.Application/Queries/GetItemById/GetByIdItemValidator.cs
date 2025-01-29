@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using NetCoreBase.Domain.Entities;
 
-namespace NetCoreBase.Application.Queries.GetByIdItemHandler
+namespace NetCoreBase.Application.Queries.GetItemById
 {
     public class GetByIdItemValidator
     {
@@ -11,10 +11,8 @@ namespace NetCoreBase.Application.Queries.GetByIdItemHandler
     {
         public CustomMappingProfile()
         {
-            CreateMap<Item, GetByIdItemQuery>()
+            CreateMap<Item, GetItemByIdResponse>()
                 .ForMember(dest=>dest.ItemName, opt => opt.MapFrom(src=>src.Name));
-            //CreateMap<Person, PersonRequestDto>();
-            //CreateMap<Person, PersonListDto>();
         }
     }
 }

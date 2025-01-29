@@ -1,4 +1,5 @@
-﻿using NetCoreBase.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using NetCoreBase.Domain.Entities;
 using NetCoreBase.Domain.Interfaces;
 using NetCoreBase.Infrastructure.Data.Postgresql;
 
@@ -12,14 +13,15 @@ namespace NetCoreBase.Infrastructure.DataAccess
         {
             _context = context;
         }
+
         public void Add(Item item)
         {
             _context.Items.Add(item);
         }
 
-        public Item GetById(int id)
+        public async Task<Item> GetByIdAsync(int id)
         {
-            var item = _context.Items.FirstOrDefault(x => x.Id == id);
+            var item = await _context.Items.FirstOrDefaultAsync(x => x.Id == id);
             if (item == null)
             {
                 throw new Exception($"Item with id {id} not found.");
@@ -33,6 +35,26 @@ namespace NetCoreBase.Infrastructure.DataAccess
             _context.SaveChanges();
         }
 
-        // create a new method to get all items 
+        public void Delete(Item item)
+        {
+            _context.Items.Remove(item);
+            _context.SaveChanges();
+        }
+
+        public IEnumerable<Item> GetAll(int pageNumber, int pageSize)
+        {
+            return _context.Items
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
+        }
+
+        public async Task<IEnumerable<Item>> GetAllAsync(int pageNumber, int pageSize)
+        {
+            return await _context.Items
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+        }
     }
 }

@@ -2,13 +2,13 @@
 using MediatR;
 using NetCoreBase.Domain.Interfaces;
 
-namespace NetCoreBase.Application.Queries.GetByIdItemHandler
+namespace NetCoreBase.Application.Queries.GetItemById
 {
-    public class ItemGetByIdQuery : IRequest<GetByIdItemQuery>
+    public class GetItemByIdRequest : IRequest<GetItemByIdResponse>
     {
         public int Id { get; set; }
 
-        public class GetByIdItemHandler : IRequestHandler<ItemGetByIdQuery, GetByIdItemQuery>
+        public class GetByIdItemHandler : IRequestHandler<GetItemByIdRequest, GetItemByIdResponse>
         {
             public readonly IMapper _mapper;
 
@@ -20,15 +20,14 @@ namespace NetCoreBase.Application.Queries.GetByIdItemHandler
                 _repository = repository;
             }
 
-            public async Task<GetByIdItemQuery> Handle(ItemGetByIdQuery request, CancellationToken cancellationToken)
+            public async Task<GetItemByIdResponse> Handle(GetItemByIdRequest request, CancellationToken cancellationToken)
             {
-                var item = _repository.GetById(request.Id);
+                var item = await _repository.GetByIdAsync(request.Id);
 
-                var data = _mapper.Map<GetByIdItemQuery>(item);
+                var data = _mapper.Map<GetItemByIdResponse>(item);
 
                 return data;
             }
         }
     }
-   
 }

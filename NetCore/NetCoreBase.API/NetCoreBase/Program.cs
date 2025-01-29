@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using NetCoreBase.Application.Queries.GetByIdItemHandler;
+using NetCoreBase.Application.Queries.GetItemById;
 using NetCoreBase.Extensions;
 using NetCoreBase.Infrastructure.Data.Postgresql;
 
@@ -19,7 +19,7 @@ namespace NetCoreBase
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            // add cors extension and Load CORS origins from appsettings.json            
+            // add cors extension and Load CORS origins from appsettings.json
             var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>();
             if (allowedOrigins == null || allowedOrigins.Length == 0)
             {
@@ -65,6 +65,6 @@ namespace NetCoreBase
             app.MapControllers();
 
             app.Run();
-        }        
+        }
     }
 }

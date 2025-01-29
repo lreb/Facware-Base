@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using System.Reflection;
-using static NetCoreBase.Application.Queries.GetByIdItemHandler.ItemGetByIdQuery;
+using NetCoreBase.Application.Queries.GetItemById;
 
 namespace NetCoreBase.Extensions
 {
@@ -37,7 +37,7 @@ namespace NetCoreBase.Extensions
         /// <returns>Service collection</returns>
         public static IServiceCollection RegisterCommandsAndQueries(this IServiceCollection services)
         {
-            services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(GetByIdItemHandler).GetTypeInfo().Assembly));
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(GetItemByIdRequest).GetTypeInfo().Assembly));
 
             return services;
         }
