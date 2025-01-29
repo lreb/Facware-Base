@@ -35,3 +35,5 @@ obj/
 *.log
 *.vs/
 .vscode/
+
+NetCore/NetCoreBase.API/appsettings.Local.json
