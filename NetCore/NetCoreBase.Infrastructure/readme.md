@@ -9,6 +9,15 @@ External Services: Implementations for external services and APIs.
 Migrations: Database migrations for schema changes.
 Dependency Injection: Registration of services and repositories in the DI container.
 
+## Structure organization
+/NetCoreBase.Infrastructure: Contains infrastructure-related code, such as data access and external services.
+- /Data: Contains database context and configurations.
+- /Repositories: Contains repository implementations.
+- /Configurations: Contains infrastructure-related configurations.
+- /Migrations: Contains database migrations.
+- /Services: Contains infrastructure services.
+
+
 Install dotnet-ef
 `https://learn.microsoft.com/en-us/ef/core/cli/dotnet`
 
