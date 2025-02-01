@@ -41,3 +41,13 @@ dotnet-ef.exe migrations list -s .\NetCoreBase\NetCoreBase.csproj -p .\NetCoreBa
 dotnet-ef migrations list -s NetCore/NetCoreBase.API/NetCoreBase.API.csproj  --project NetCore/NetCoreBase.Infrastructure/NetCoreBase.Infrastructure.csproj -v
 
 dotnet-ef migrations remove -s NetCore/NetCoreBase.API/NetCoreBase.API.csproj  --project NetCore/NetCoreBase.Infrastructure/NetCoreBase.Infrastructure.csproj -v
+
+
+---
+
+
+Set current environment set ASPNETCORE_ENVIRONMENT=development
+
+Add new Migration: dotnet ef migrations add MyNewMigration
+
+Revert Migration: dotnet ef migrations remove
