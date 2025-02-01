@@ -29,6 +29,8 @@ dotnet-ef.exe migrations add initial -p ..\..\NetCoreBase.Infrastructure.csproj 
 ## migrations
 dotnet-ef.exe migrations add init -s .\NetCoreBase\NetCoreBase.csproj -p .\NetCoreBase.Infrastructure\NetCoreBase.Infrastructure.csproj -o .\Data\Migrations
 
+dotnet-ef  migrations add fullentity -s NetCore/NetCoreBase.API/NetCoreBase.API.csproj -p NetCore/NetCoreBase.Infrastructure/NetCoreBase.Infrastructure.csproj -o Data/Migrations/
+
 ## update db
 
 dotnet-ef.exe database update -s .\NetCoreBase\NetCoreBase.csproj -p .\NetCoreBase.Infrastructure\NetCoreBase.Infrastructure.csproj
@@ -36,4 +38,6 @@ dotnet-ef.exe database update -s .\NetCoreBase\NetCoreBase.csproj -p .\NetCoreBa
 --extra
 
 dotnet-ef.exe migrations list -s .\NetCoreBase\NetCoreBase.csproj -p .\NetCoreBase.Infrastructure\NetCoreBase.Infrastructure.csproj
-dotnet-ef.exe migrations remove -s .\NetCoreBase\NetCoreBase.csproj -p .\NetCoreBase.Infrastructure\NetCoreBase.Infrastructure.csproj
+dotnet-ef migrations list -s NetCore/NetCoreBase.API/NetCoreBase.API.csproj  --project NetCore/NetCoreBase.Infrastructure/NetCoreBase.Infrastructure.csproj -v
+
+dotnet-ef migrations remove -s NetCore/NetCoreBase.API/NetCoreBase.API.csproj  --project NetCore/NetCoreBase.Infrastructure/NetCoreBase.Infrastructure.csproj -v

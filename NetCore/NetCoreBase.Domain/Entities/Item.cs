@@ -1,8 +1,9 @@
-﻿namespace NetCoreBase.Domain.Entities
+﻿using NetCoreBase.Domain.Common;
+
+namespace NetCoreBase.Domain.Entities
 {
-    public class Item
+    public class Item : BaseFullEntity
     {
-        public int Id { get; set; }
         public required string Name { get; set; }
     }
 }

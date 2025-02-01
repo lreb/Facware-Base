@@ -3,7 +3,7 @@ using NetCoreBase.Domain.Entities;
 using NetCoreBase.Domain.Interfaces;
 using NetCoreBase.Infrastructure.Data.Postgresql;
 
-namespace NetCoreBase.Infrastructure.DataAccess
+namespace NetCoreBase.Infrastructure.Respositories
 {
     public class ItemRepository : IItemRepository
     {

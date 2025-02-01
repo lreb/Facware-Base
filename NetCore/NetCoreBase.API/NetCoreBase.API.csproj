@@ -17,7 +17,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NetCoreBase.Application\NetCoreBase.Application.csproj" />
-    <ProjectReference Include="..\NetCoreBase.Infrastructure\NetCoreBase.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

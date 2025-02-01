@@ -35,7 +35,7 @@ namespace NetCoreBase.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Items");
+                    b.ToTable("Items", (string)null);
 
                     b.HasData(
                         new
