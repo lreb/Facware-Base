@@ -15,7 +15,7 @@ namespace NetCoreBase.Infrastructure.Data.Postgresql
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new SeedConfiguration());
+            modelBuilder.AddEntityConfigurations();
         }
     }
 }
