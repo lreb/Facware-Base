@@ -15,6 +15,7 @@ namespace NetCoreBase.API.Extensions
         public static IServiceCollection AddAutoMapperProfiles(this IServiceCollection services)
         {
             services.AddAutoMapper(typeof(ItemMappingProfile).Assembly);
+            
             return services;
         }
     }
