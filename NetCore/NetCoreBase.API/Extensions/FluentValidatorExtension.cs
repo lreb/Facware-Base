@@ -1,5 +1,9 @@
 ﻿using FluentValidation;
+using NetCoreBase.Application.Features.Items.Commands.AddItem;
+using NetCoreBase.Application.Features.Items.Commands.DeleteItem;
+using NetCoreBase.Application.Features.Items.Commands.UpdateItem;
 using NetCoreBase.Application.Features.Items.Queries.GetItemById;
+using NetCoreBase.Application.Features.Items.Queries.GetPagedItems;
 
 namespace NetCoreBase.API.Extensions
 {
@@ -16,6 +20,10 @@ namespace NetCoreBase.API.Extensions
         public static IServiceCollection AddFluentValidation(this IServiceCollection services)
         {
             services.AddScoped<IValidator<GetItemByIdRequest>, GetByIdItemValidator>();
+            services.AddScoped<IValidator<AddItemRequest>, AddItemValidator>();
+            services.AddScoped<IValidator<UpdateItemRequest>, UpdateItemValidator>();
+            services.AddScoped<IValidator<DeleteItemRequest>, DeleteItemValidator>();
+            services.AddScoped<IValidator<GetPagedItemsRequest>, GetPagedItemsValidator>();
             return services;
         }
     }
