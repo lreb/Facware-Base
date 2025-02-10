@@ -15,9 +15,9 @@ namespace NetCoreBase.Infrastructure.DataAccess
             _dbSet = context.Set<T>();
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public async Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken)
         {
-            return await _dbSet.ToListAsync();
+            return await _dbSet.ToListAsync(cancellationToken);
         }
 
         public async Task<T> GetByIdAsync(int id)

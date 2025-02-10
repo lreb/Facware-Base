@@ -1,5 +1,5 @@
 ﻿using NetCoreBase.Domain.Interfaces;
-using NetCoreBase.Infrastructure.Respositories;
+using NetCoreBase.Infrastructure.Repositories;
 
 namespace NetCoreBase.API.Extensions
 {
