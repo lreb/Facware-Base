@@ -40,11 +40,6 @@ namespace NetCoreBase.API.Controllers
         public async Task<IActionResult> Index()
         {
             var query = new GetAllItemsRequest();
-            // var validationResult = await _validatorGetItem.ValidateAsync(query);
-            // if (!validationResult.IsValid)
-            // {
-            //     return BadRequest(validationResult.Errors);
-            // }
             var item = await _mediator.Send(query);
             return Ok(item);
         }

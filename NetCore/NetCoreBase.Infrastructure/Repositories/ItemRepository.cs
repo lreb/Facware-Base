@@ -3,7 +3,7 @@ using NetCoreBase.Domain.Entities;
 using NetCoreBase.Domain.Interfaces;
 using NetCoreBase.Infrastructure.Data.Postgresql;
 
-namespace NetCoreBase.Infrastructure.Respositories
+namespace NetCoreBase.Infrastructure.Repositories
 {
     public class ItemRepository : IItemRepository
     {
@@ -14,9 +14,9 @@ namespace NetCoreBase.Infrastructure.Respositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Item>> GetAllAsync()
+        public async Task<IEnumerable<Item>> GetAllAsync(CancellationToken cancellationToken)
         {
-            return await _context.Items.AsNoTracking().ToListAsync();
+            return await _context.Items.AsNoTracking().ToListAsync(cancellationToken);
         }
 
         /// <summary>
@@ -30,6 +30,8 @@ namespace NetCoreBase.Infrastructure.Respositories
             if (item == null)
             {
                 throw new Exception($"{typeof(Item)} with id {id} not found.");
+                //throw new NotFoundException($"{typeof(Item)} with id {id} not found.");
+                //throw new OperationResponse().NotFoundOperation($"{typeof(Item)} with id {id} not found.");
             }
             return item;
         }

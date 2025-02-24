@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using NetCoreBase.Domain.Common;
 using NetCoreBase.Domain.Interfaces;
 
 namespace NetCoreBase.Application.Features.Items.Queries.GetItemById
@@ -7,7 +8,7 @@ namespace NetCoreBase.Application.Features.Items.Queries.GetItemById
     /// <summary>
     /// Get item by id request object
     /// </summary>
-    public class GetItemByIdRequest : IRequest<GetItemByIdResponse>
+    public class GetItemByIdRequest : IRequest<OperationResponse<GetItemByIdResponse>>
     {
         /// <summary>
         /// Item id
@@ -17,7 +18,7 @@ namespace NetCoreBase.Application.Features.Items.Queries.GetItemById
         /// <summary>
         /// Get item by id handler busines logic, consumes item repository service
         /// </summary>
-        public class GetByIdItemHandler : IRequestHandler<GetItemByIdRequest, GetItemByIdResponse>
+        public class GetByIdItemHandler : IRequestHandler<GetItemByIdRequest, OperationResponse<GetItemByIdResponse>>
         {
             /// <summary>
             /// AutoMapper instance
@@ -45,13 +46,15 @@ namespace NetCoreBase.Application.Features.Items.Queries.GetItemById
             /// <param name="request"></param>
             /// <param name="cancellationToken"></param>
             /// <returns></returns>
-            public async Task<GetItemByIdResponse> Handle(GetItemByIdRequest request, CancellationToken cancellationToken)
+            public async Task<OperationResponse<GetItemByIdResponse>> Handle(GetItemByIdRequest request, CancellationToken cancellationToken)
             {
                 var item = await _repository.GetByIdAsync(request.Id);
 
                 var data = _mapper.Map<GetItemByIdResponse>(item);
 
-                return data;
+                var result = new OperationResponse<GetItemByIdResponse>().SuccessOperation(data, "Item retrieved successfully");
+
+                return result;
             }
         }
     }

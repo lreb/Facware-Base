@@ -1,11 +1,12 @@
 using AutoMapper;
 using MediatR;
+using NetCoreBase.Domain.Common;
 using NetCoreBase.Domain.Interfaces;
 
 namespace NetCoreBase.Application.Features.Items.Queries.GetAllItems
 {
     // Handler class
-    public class GetAllItemsHandler : IRequestHandler<GetAllItemsRequest, IEnumerable<GetAllItemsResponse>>
+    public class GetAllItemsHandler : IRequestHandler<GetAllItemsRequest, OperationResponse<IEnumerable<GetAllItemsResponse>>>
     {
         /// <summary>
             /// AutoMapper instance
@@ -23,13 +24,12 @@ namespace NetCoreBase.Application.Features.Items.Queries.GetAllItems
             _repository = itemRepository;
         }
 
-        public async Task<IEnumerable<GetAllItemsResponse>> Handle(GetAllItemsRequest request, CancellationToken cancellationToken)
+        public async Task<OperationResponse<IEnumerable<GetAllItemsResponse>>> Handle(GetAllItemsRequest request, CancellationToken cancellationToken)
         {
-            var items = await _repository.GetAllAsync();
-
+            var items = await _repository.GetAllAsync(cancellationToken);
             var data = _mapper.Map<IEnumerable<GetAllItemsResponse>>(items);
-
-            return data;
+            var result = new OperationResponse<IEnumerable<GetAllItemsResponse>>().SuccessOperation(data, "Items retrieved successfully");
+            return result;
         }
     }
 }

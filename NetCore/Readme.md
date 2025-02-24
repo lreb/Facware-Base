@@ -22,8 +22,10 @@ dotnet restore
 
 ## run appliction
 
+before run, apply pending migrations
+
 ``` bash
-dotnet run --project NetCoreBase.API/NetCoreBase.API.csproj --environment "Local"
+dotnet run --project NetCore/NetCoreBase.API/NetCoreBase.API.csproj --environment "Local"
 ```
 
 add packages

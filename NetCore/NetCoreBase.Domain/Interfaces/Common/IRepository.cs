@@ -15,7 +15,7 @@ namespace NetCoreBase.Domain.Interfaces.Common
         /// <returns>
         /// <see cref="IEnumerable{T}"/>
         /// </returns>
-        Task<IEnumerable<T>> GetAllAsync();
+        Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken);
         /// <summary>
         /// Get entity by id
         /// </summary>
