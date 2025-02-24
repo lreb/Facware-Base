@@ -37,9 +37,12 @@ dotnet-ef  migrations add fullentity -s NetCore/NetCoreBase.API/NetCoreBase.API.
 
 dotnet-ef database update -s .\NetCoreBase\NetCoreBase.csproj -p .\NetCoreBase.Infrastructure\NetCoreBase.Infrastructure.csproj
 
--- set environment to apply the migration
+### Apply migrations
 
+```bash
 dotnet-ef database update -s NetCoreBase.API/NetCoreBase.API.csproj -p NetCoreBase.Infrastructure/NetCoreBase.Infrastructure.csproj -- --environment Local
+```
+
 
 --extra
 
