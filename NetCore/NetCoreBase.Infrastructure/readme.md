@@ -43,6 +43,11 @@ dotnet-ef database update -s .\NetCoreBase\NetCoreBase.csproj -p .\NetCoreBase.I
 dotnet-ef database update -s NetCoreBase.API/NetCoreBase.API.csproj -p NetCoreBase.Infrastructure/NetCoreBase.Infrastructure.csproj -- --environment Local
 ```
 
+### pending migrations
+
+```bash
+dotnet-ef migrations list -s NetCore/NetCoreBase.API/NetCoreBase.API.csproj --project NetCore/NetCoreBase.Infrastructure/NetCoreBase.Infrastructure.csproj
+```
 
 --extra
 
