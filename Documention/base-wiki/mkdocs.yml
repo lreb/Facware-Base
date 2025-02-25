@@ -1,0 +1,7 @@
+site_name: Base Wiki
+nav:
+  - Home: index.md
+  - Net Core: net/net-core.md
+  - Angular: angular/angular.md
+  - About: about.md
+theme: readthedocs

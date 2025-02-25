@@ -37,3 +37,7 @@ obj/
 .vscode/
 
 NetCore/NetCoreBase.API/appsettings.Local.json
+
+
+# documentation
+Documention/env_local
