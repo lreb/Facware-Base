@@ -61,6 +61,8 @@ namespace NetCoreBase.API
 
             app.UseHttpsRedirection();
 
+            app.UseCors("AllowSpecificOrigins");
+
             app.UseAuthorization();
 
             app.MapControllers();
