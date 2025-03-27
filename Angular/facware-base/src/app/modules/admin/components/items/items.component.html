@@ -6,14 +6,14 @@
     <tr>
       <th>ID</th>
       <th>Name</th>
-      <th>Description</th>
+      <th>Add to cart</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let item of items">
       <td>{{ item.id }}</td>
       <td>{{ item.name }}</td>
-      <td>N/A</td>
+      <td><button (click)="addItemToCart(item)">Add Item</button></td>
     </tr>
   </tbody>
 </table>
