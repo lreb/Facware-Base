@@ -1,4 +1,7 @@
-﻿namespace NetCoreBase.Domain.Common
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace NetCoreBase.Domain.Common
 {
     /// <summary>
     /// Implements the base auditable entity to identify the created and last modified date and user
@@ -8,18 +11,18 @@
         /// <summary>
         /// Date and time when the entity was created
         /// </summary>
-        public DateTimeOffset Created { get; set; }
+        public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
         /// <summary>
-        /// Created by user name or id 
+        /// Created by user name or id
         /// </summary>
         public string? CreatedBy { get; set; }
         /// <summary>
         /// Date and time when the entity was last modified
         /// </summary>
-        public DateTimeOffset LastModified { get; set; }
+        public DateTimeOffset? UpdatedAt { get; set; }
         /// <summary>
         /// Last modified by user name or id
         /// </summary>
-        public string? LastModifiedBy { get; set; }
+        public string? UpdatedBy { get; set; }
     }
 }

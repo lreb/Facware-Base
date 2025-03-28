@@ -11,7 +11,7 @@ namespace NetCoreBase.Infrastructure.Data.Postgresql
         }
 
         public virtual DbSet<Item> Items { get; set; }
-
+        public virtual DbSet<Warehouse> Warehouses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

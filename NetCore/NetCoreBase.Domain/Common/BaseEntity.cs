@@ -1,4 +1,7 @@
-﻿namespace NetCoreBase.Domain.Common
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace NetCoreBase.Domain.Common
 {
     /// <summary>
     /// Base entity class
@@ -8,6 +11,8 @@
         /// <summary>
         /// Id of the entity
         /// </summary>
-        public int Id { get; set; }
+        // [Key]
+        // [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long Id { get; set; }
     }
 }

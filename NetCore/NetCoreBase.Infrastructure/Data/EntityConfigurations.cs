@@ -8,6 +8,7 @@ namespace NetCoreBase.Infrastructure.Data
         internal static ModelBuilder AddEntityConfigurations(this ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new ItemConfiguration());
+            modelBuilder.ApplyConfiguration(new WarehouseConfiguration());
 
             return modelBuilder;
         }

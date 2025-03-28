@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ItemsService } from '../../../../core/services/items.service';
 import { Item } from '../../../../shared/models/item';
-import { NgFor } from '@angular/common';
+import { CommonModule, NgFor } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { addItem } from '../../../../core/store/cart/cart.actions';
@@ -9,7 +9,7 @@ import { addItem } from '../../../../core/store/cart/cart.actions';
 @Component({
   selector: 'app-items',
   standalone: true,
-  imports: [NgFor],
+  imports: [NgFor, CommonModule],
   templateUrl: './items.component.html',
   styleUrl: './items.component.css'
 })

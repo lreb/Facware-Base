@@ -24,18 +24,38 @@ Install dotnet-ef
 
 dotnet-ef.exe migrations add initial -p ..\..\NetCoreBase.Infrastructure.csproj -c ApplicationDbContext -s ..\..\..\NetCoreBase\ -o ..\..\Data\Migrations
 
-
 # Package Manager Console
-## migrations
-dotnet-ef.exe migrations add init -s .\NetCoreBase\NetCoreBase.csproj -p .\NetCoreBase.Infrastructure\NetCoreBase.Infrastructure.csproj -o .\Data\Migrations
 
-dotnet-ef  migrations add fullentity -s NetCore/NetCoreBase.API/NetCoreBase.API.csproj -p NetCore/NetCoreBase.Infrastructure/NetCoreBase.Infrastructure.csproj -o Data/Migrations/
+s
+
+## migrations
+
+### list migrations
+
+```bash
+dotnet-ef migrations list -s NetCoreBase.API/NetCoreBase.API.csproj --project NetCoreBase.Infrastructure/NetCoreBase.Infrastructure.csproj
+```
+
+### add migration
+
+```bash
+dotnet-ef migrations add <MIGRATION_NAME> -s NetCoreBase.API/NetCoreBase.API.csproj -p NetCoreBase.Infrastructure/NetCoreBase.Infrastructure.csproj -o Data/Migrations/
+```
+
+### remove migration
+Query migrations, if it's already applied, you need to revert it first. on database
+```bash
+dotnet ef database update <PREVIOUS_MIGRATION> -s NetCoreBase.API/NetCoreBase.API.csproj --project NetCoreBase.Infrastructure/NetCoreBase.Infrastructure.csproj -- --environment Local
+```
+
+if you want to remove the last migration (database wasn't updated before), you can use the following command
+
+```bash
+dotnet ef migrations remove -s NetCoreBase.API/NetCoreBase.API.csproj -p NetCoreBase.Infrastructure/NetCoreBase.Infrastructure.csproj -- --environment Local
+```
 
 ## update db
-
--- default
-
-dotnet-ef database update -s .\NetCoreBase\NetCoreBase.csproj -p .\NetCoreBase.Infrastructure\NetCoreBase.Infrastructure.csproj
+uses cases to update database
 
 ### Apply migrations
 
@@ -46,7 +66,18 @@ dotnet-ef database update -s NetCoreBase.API/NetCoreBase.API.csproj -p NetCoreBa
 ### pending migrations
 
 ```bash
-dotnet-ef migrations list -s NetCore/NetCoreBase.API/NetCoreBase.API.csproj --project NetCore/NetCoreBase.Infrastructure/NetCoreBase.Infrastructure.csproj
+dotnet-ef migrations has-pending-model-changes -s NetCoreBase.API/NetCoreBase.API.csproj -p NetCoreBase.Infrastructure/NetCoreBase.Infrastructure.csproj
+```
+
+### drop database
+
+```bash
+dotnet-ef database drop -s NetCoreBase.API/NetCoreBase.API.csproj -p NetCoreBase.Infrastructure/NetCoreBase.Infrastructure.csproj -- --environment Local
+```
+
+#### drop all project migrations
+```bash
+rm -rf NetCoreBase.Infrastructure/Data/Migrations/*
 ```
 
 --extra
