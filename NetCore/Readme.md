@@ -31,4 +31,7 @@ dotnet run --project NetCoreBase.API/NetCoreBase.API.csproj -- --environment Loc
 add packages
 ```bash
 dotnet add --project NetCoreBase.Application/NetCoreBase.Application.csproj package FluentValidation  
+
+
+dotnet add --project NetCoreBase.Application/NetCoreBase.Application.csproj package Asp.Versioning.Mvc.ApiExplorer --version 8.1.0
 ```

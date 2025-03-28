@@ -7,11 +7,16 @@ using NetCoreBase.Application.Features.Items.Commands.AddItem;
 using NetCoreBase.Application.Features.Items.Commands.UpdateItem;
 using NetCoreBase.Application.Features.Items.Commands.DeleteItem;
 using NetCoreBase.Application.Features.Items.Queries.GetPagedItems;
+using Asp.Versioning;
 
 namespace NetCoreBase.API.Controllers
 {
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
+    [Route("api/v{version:apiVersion}/items")]
     [ApiController]
-    [Route("[controller]")]
+    //[Route("[controller]")]
+    //[Route("items")]
     public class ItemController : ControllerBase
     {
         private IMediator _mediator;
@@ -36,6 +41,7 @@ namespace NetCoreBase.API.Controllers
             _validatorGetPagedItems = validatorGetPagedItems ?? throw new ArgumentNullException(nameof(validatorGetPagedItems));
         }
 
+        [MapToApiVersion(1)]
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -44,6 +50,16 @@ namespace NetCoreBase.API.Controllers
             return Ok(item);
         }
 
+        [MapToApiVersion(2)]
+        [HttpGet]
+        public async Task<IActionResult> IndexV2()
+        {
+            var query = new GetAllItemsRequest();
+            var item = await _mediator.Send(query);
+            return Ok(item);
+        }
+
+        [MapToApiVersion(1)]
         [HttpGet("{id}")]
         public async Task<IActionResult> Index(int id)
         {
@@ -57,6 +73,7 @@ namespace NetCoreBase.API.Controllers
             return Ok(item);
         }
 
+        [MapToApiVersion(1)]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] AddItemRequest request)
         {
@@ -69,6 +86,7 @@ namespace NetCoreBase.API.Controllers
             return CreatedAtAction(nameof(Index), new { id = item.Id }, item);
         }
 
+        [MapToApiVersion(1)]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] UpdateItemRequest request)
         {
@@ -85,6 +103,7 @@ namespace NetCoreBase.API.Controllers
             return CreatedAtAction(nameof(Index), new { id = item.Id }, item);
         }
 
+        [MapToApiVersion(1)]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -104,6 +123,7 @@ namespace NetCoreBase.API.Controllers
             return NoContent();
         }
 
+        [MapToApiVersion(1)]
         [HttpGet("paged")]
         public async Task<IActionResult> GetPaged([FromQuery] GetPagedItemsRequest request)
         {
