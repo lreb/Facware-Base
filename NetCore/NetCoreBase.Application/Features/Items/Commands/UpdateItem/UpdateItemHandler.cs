@@ -29,10 +29,10 @@ namespace NetCoreBase.Application.Features.Items.Commands.UpdateItem
 
             item.Name = request.Name;
             item.IsActive = request.IsActive;
-            item.LastModified = DateTimeOffset.UtcNow;
-            item.LastModifiedBy = "System"; // TODO: Get current user  
+            item.UpdatedAt = DateTimeOffset.UtcNow;
+            item.UpdatedBy = "system"; // TODO: Get current user
 
-            var updatedData = await _repository.UpdateAsync(item);            
+            var updatedData = await _repository.UpdateAsync(item);
 
             return updatedData;
         }

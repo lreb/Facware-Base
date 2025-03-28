@@ -9,12 +9,9 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
   ],
   imports: [
     CommonModule,
-    // HomeComponent,
-    // WelcomeComponent,
     RouterModule.forChild([
       { path: '', component: HomeComponent }
     ])
-    //HomeComponent  // Import the standalone component here
   ]
 })
 export class HomeModule { }

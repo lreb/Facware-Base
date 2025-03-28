@@ -1,4 +1,6 @@
-﻿namespace NetCoreBase.Domain.Common
+﻿using System.ComponentModel;
+
+namespace NetCoreBase.Domain.Common
 {
     /// <summary>
     /// Implements the base full entity properties id, logical delete and audit properties
@@ -8,6 +10,6 @@
         /// <summary>
         /// Logical delete flag
         /// </summary>
-        public bool IsActive { get; set; } = true;
+        public bool IsActive { get; set; }
     }
 }

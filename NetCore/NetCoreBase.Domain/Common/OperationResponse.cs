@@ -8,10 +8,10 @@ namespace NetCoreBase.Domain.Common
         private const string Warning = "warning";
         private const string Fail = "fail";
 
-        public string OperationStatus { get; set; }
+        public string? OperationStatus { get; set; }
         public int StatusCode { get; set; }
-        public string Message { get; set; }
-        public T Data { get; set; }
+        public string? Message { get; set; }
+        public T? Data { get; set; }
 
         public OperationResponse<T> SuccessOperation(T data, string message = "Operation completed successfully")
         {

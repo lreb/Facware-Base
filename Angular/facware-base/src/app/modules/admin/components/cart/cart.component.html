@@ -1,0 +1,13 @@
+<p>cart works!</p>
+
+<button (click)="clearCart()">Clear Cart</button>
+
+<div *ngFor="let item of items$ | async">
+  {{ item.name }} × {{ item.quantity }}
+  <button (click)="removeOne(item)">-</button>
+  <button (click)="addOne(item)">+</button>
+  <button (click)="remove(item.id)">Remove All</button>
+</div>
+<p>Total: {{ total$ | async | currency }}</p>
+
+<!--  -->

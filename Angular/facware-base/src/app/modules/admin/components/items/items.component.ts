@@ -1,13 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ItemsService } from '../../../../core/services/items.service';
 import { Item } from '../../../../shared/models/item';
-import { NgFor } from '@angular/common';
+import { CommonModule, NgFor } from '@angular/common';
 import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { addItem } from '../../../../core/store/cart/cart.actions';
 
 @Component({
   selector: 'app-items',
   standalone: true,
-  imports: [NgFor],
+  imports: [NgFor, CommonModule],
   templateUrl: './items.component.html',
   styleUrl: './items.component.css'
 })
@@ -18,7 +20,9 @@ export class ItemsComponent implements OnInit, OnDestroy {
   /**
    *
    */
-  constructor(private itemsService: ItemsService) {
+  constructor(
+    private itemsService: ItemsService,
+    private store: Store) {
   }
 
   ngOnInit(): void {
@@ -34,6 +38,17 @@ export class ItemsComponent implements OnInit, OnDestroy {
       error: (err) => console.error('Error:', err), // Handle error
       complete: () => console.log('Fetch complete') // Handle completion
     });
+  }
+
+  addItemToCart(item: Item) {
+  console.log('Item added to cart:', item);
+    const cartItem: Item = {
+      id: item.id,
+      name: item.name,
+      price: item.price,
+      quantity: 1,
+    };
+    this.store.dispatch(addItem({ item: cartItem }));
   }
 
   ngOnDestroy() {

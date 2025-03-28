@@ -22,7 +22,12 @@ namespace NetCoreBase.Infrastructure.DataAccess
 
         public async Task<T> GetByIdAsync(int id)
         {
-            return await _dbSet.FindAsync(id);
+            var entity = await _dbSet.FindAsync(id);
+            if (entity == null)
+            {
+                throw new KeyNotFoundException($"Entity with ID {id} was not found.");
+            }
+            return entity;
         }
 
         public async Task<T> AddAsync(T entity)

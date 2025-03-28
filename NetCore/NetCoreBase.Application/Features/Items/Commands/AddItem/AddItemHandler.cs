@@ -21,8 +21,8 @@ namespace NetCoreBase.Application.Features.Items.Commands.AddItem
         {
             var newItem = _mapper.Map<Item>(request);
             newItem.IsActive = true;
-            newItem.Created = DateTimeOffset.UtcNow;
-            newItem.CreatedBy = "System"; // TODO: Get current user
+            newItem.CreatedAt = DateTimeOffset.UtcNow;
+            newItem.CreatedBy = "system"; // TODO: Get current user
 
             await _itemRepository.AddAsync(newItem);
 
