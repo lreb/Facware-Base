@@ -1,4 +1,3 @@
-using Asp.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using NetCoreBase.API.Extensions;
@@ -18,19 +17,7 @@ namespace NetCoreBase.API
             // Add services to the container.
             builder.Services.AddControllers();
 
-            //builder.Services.AddApiVersioning(options =>
-            //{
-            //    options.DefaultApiVersion = new ApiVersion(1, 0); // Default version: v1.0
-            //    options.AssumeDefaultVersionWhenUnspecified = true; // Use default if version not specified
-            //    options.ReportApiVersions = true; // Include version info in responses
-            //    options.ApiVersionReader = new UrlSegmentApiVersionReader(); // Read version from URL (e.g., /v1/)
-            //}).AddApiExplorer(
-            //    options => 
-            //    {
-            //        options.GroupNameFormat = "'v'V"; // Format as "v1", "v2", etc.
-            //        options.SubstituteApiVersionInUrl = true; // Replace {version} in routes
-            //    }
-            //);
+            // Add versioning
             builder.Services.AddAspApiVersioning();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
