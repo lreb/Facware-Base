@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreBase.Domain", "NetCo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreBase.Application", "NetCoreBase.Application\NetCoreBase.Application.csproj", "{BC4A6E52-13F7-4D7B-8310-AA550C23FD8A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{A9BDD278-B9BA-4104-8BC2-20942E93A927}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreBase.Test", "NetCoreBase.Test\NetCoreBase.Test.csproj", "{2AAD4331-DB9B-45BF-8623-5CA1F4508C50}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,10 @@ Global
 		{BC4A6E52-13F7-4D7B-8310-AA550C23FD8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC4A6E52-13F7-4D7B-8310-AA550C23FD8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC4A6E52-13F7-4D7B-8310-AA550C23FD8A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{73804DC1-62DF-480B-B82C-09FE6BEA12BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{73804DC1-62DF-480B-B82C-09FE6BEA12BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{73804DC1-62DF-480B-B82C-09FE6BEA12BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{73804DC1-62DF-480B-B82C-09FE6BEA12BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AAD4331-DB9B-45BF-8623-5CA1F4508C50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AAD4331-DB9B-45BF-8623-5CA1F4508C50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AAD4331-DB9B-45BF-8623-5CA1F4508C50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AAD4331-DB9B-45BF-8623-5CA1F4508C50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,5 +1,4 @@
 ﻿using NetCoreBase.Domain.Common;
-using System.ComponentModel.DataAnnotations;
 
 namespace NetCoreBase.Domain.Entities
 {

@@ -1,9 +1,12 @@
+using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 
 namespace NetCoreBase.API.Controllers
 {
+    [ApiVersion("2.0", Deprecated = true)] // Mark this version as deprecated
+    [Route("api/v{version:apiVersion}/weatherforecast")] // Use version in route
     [ApiController]
-    [Route("[controller]")]
+    //[Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
@@ -18,6 +21,7 @@ namespace NetCoreBase.API.Controllers
             _logger = logger;
         }
 
+        [MapToApiVersion(2)] // Map this action to version 2
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
