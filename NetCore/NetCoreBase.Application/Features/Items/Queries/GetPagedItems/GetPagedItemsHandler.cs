@@ -21,7 +21,7 @@ namespace NetCoreBase.Application.Features.Items.Queries.GetPagedItems
 
         public async Task<GetPagedItemsResponse> Handle(GetPagedItemsRequest request, CancellationToken cancellationToken)
         {
-            var (items, totalCount) = await _repository.GetPagedAsync(request.PageNumber, request.PageSize);
+            var (items, totalCount) = await _repository.GetPagedAsync(request.PageNumber, request.PageSize, cancellationToken);
 
             var itemDtos = _mapper.Map<IEnumerable<GetItemByIdResponse>>(items);
 

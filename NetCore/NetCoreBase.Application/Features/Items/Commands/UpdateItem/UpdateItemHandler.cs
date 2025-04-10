@@ -18,17 +18,17 @@ namespace NetCoreBase.Application.Features.Items.Commands.UpdateItem
 
         public async Task<Item> Handle(UpdateItemRequest request, CancellationToken cancellationToken)
         {
-            var item = await _repository.GetByIdAsync(request.Id);
+            var item = await _repository.GetByIdAsync(request.Id, cancellationToken);
             if (item == null)
             {
                 throw new KeyNotFoundException($"Item with Id {request.Id} not found.");
             }
 
-            //var data = _mapper.Map<Item>(request);
-            
+            item.Name = request.Name != item.Name ? request.Name : item.Name;
+            item.Description = request.Description != item.Description ? request.Description : item.Description;
+            item.Price = request.Price != item.Price ? request.Price : item.Price;
+            item.IsActive = request.IsActive != item.IsActive ? request.IsActive : item.IsActive;
 
-            item.Name = request.Name;
-            item.IsActive = request.IsActive;
             item.UpdatedAt = DateTimeOffset.UtcNow;
             item.UpdatedBy = "system"; // TODO: Get current user
 

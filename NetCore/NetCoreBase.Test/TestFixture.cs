@@ -33,7 +33,7 @@ namespace NetCoreBase.Test
 
 
                     // Register services here
-                    services.AddScoped<IItemRepository, ItemRepository>();
+                    services.AddTransient<IItemRepository, ItemRepository>();
                 })
                 .Build();
 
