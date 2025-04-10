@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using NetCoreBase.Domain.Entities;
 using NetCoreBase.Domain.Interfaces;
 using NetCoreBase.Infrastructure.Data.Postgresql;
@@ -14,9 +15,12 @@ namespace NetCoreBase.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Item>> GetAllAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerable<Item>> GetAllAsync(Expression<Func<Item, bool>> predicate, CancellationToken cancellationToken)
         {
-            return await _context.Items.AsNoTracking().ToListAsync(cancellationToken);
+            return await _context.Items
+                .AsNoTracking()
+                .Where(predicate)
+                .ToListAsync(cancellationToken);
         }
 
         /// <summary>
@@ -24,9 +28,21 @@ namespace NetCoreBase.Infrastructure.Repositories
         /// </summary>
         /// <param name="id">item id number</param>
         /// <returns>Items<see cref="Item"/></returns>
-        public async Task<Item> GetByIdAsync(int id)
+        public async Task<Item> GetByIdAsync(long id, CancellationToken cancellationToken)
         {
-            var item = await _context.Items.FirstOrDefaultAsync(x => x.Id == id);
+            var item = await _context.Items.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+            if (item == null)
+            {
+                throw new Exception($"{typeof(Item)} with id {id} not found.");
+                //throw new NotFoundException($"{typeof(Item)} with id {id} not found.");
+                //throw new OperationResponse().NotFoundOperation($"{typeof(Item)} with id {id} not found.");
+            }
+            return item;
+        }
+
+        public async Task<Item> GetByIdAsyncNoTracking(long id, CancellationToken cancellationToken)
+        {
+            var item = await _context.Items.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
             if (item == null)
             {
                 throw new Exception($"{typeof(Item)} with id {id} not found.");
@@ -50,7 +66,7 @@ namespace NetCoreBase.Infrastructure.Repositories
             return entity;
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(long id)
         {
             var item = await _context.Items.FindAsync(id);
             if (item == null)
@@ -63,14 +79,24 @@ namespace NetCoreBase.Infrastructure.Repositories
             return true;
         }
 
-        public async Task<(IEnumerable<Item> Entities, int TotalCount)> GetPagedAsync(int pageNumber, int pageSize)
+
+        //public async Task<(IEnumerable<Item> Entities, int TotalCount)> GetPagedAsync(int pageNumber, int pageSize, CancellationToken cancellationToken);
+        //{
+        //    var totalCount = await _context.Items.CountAsync();
+        //    var items = await _context.Items
+        //        .AsNoTracking()
+        //        .Skip((pageNumber - 1) * pageSize)
+        //    .Take(pageSize)
+        //        .ToListAsync(cancellationToken);
+        //}
+        public async Task<(IEnumerable<Item> Entities, int TotalCount)> GetPagedAsync(int pageNumber, int pageSize, CancellationToken cancellationToken)
         {
             var totalCount = await _context.Items.CountAsync();
             var items = await _context.Items
                 .AsNoTracking()
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
-                .ToListAsync();
+                .ToListAsync(cancellationToken);
 
             return (items, totalCount);
         }

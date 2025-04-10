@@ -26,6 +26,8 @@ namespace NetCoreBase.API.Controllers
         private readonly IValidator<DeleteItemRequest> _validatorDeleteItem;
         private readonly IValidator<GetPagedItemsRequest> _validatorGetPagedItems;
 
+        private CancellationTokenSource _cts;
+
         public ItemController(IMediator mediator,
             IValidator<GetItemByIdRequest> validator,
             IValidator<AddItemRequest> validatorAddItem,
@@ -39,6 +41,12 @@ namespace NetCoreBase.API.Controllers
             _validatorUpdateItem = validatorUpdateItem ?? throw new ArgumentNullException(nameof(validatorUpdateItem));
             _validatorDeleteItem = validatorDeleteItem ?? throw new ArgumentNullException(nameof(validatorDeleteItem));
             _validatorGetPagedItems = validatorGetPagedItems ?? throw new ArgumentNullException(nameof(validatorGetPagedItems));
+
+            _cts = new CancellationTokenSource();
+            _cts.CancelAfter(TimeSpan.FromSeconds(30)); // Set a timeout for the operation
+                                                       // Use the CancellationToken in your async method
+                                                       // For example, if you're making an HTTP request, you can pass the token to the request method
+                                                       // var response = await httpClient.GetAsync("https://example.com", cts.Token);
         }
 
         [MapToApiVersion(1)]
@@ -46,7 +54,7 @@ namespace NetCoreBase.API.Controllers
         public async Task<IActionResult> Index()
         {
             var query = new GetAllItemsRequest();
-            var item = await _mediator.Send(query);
+            var item = await _mediator.Send(query, _cts.Token);
             return Ok(item);
         }
 
@@ -55,16 +63,16 @@ namespace NetCoreBase.API.Controllers
         public async Task<IActionResult> IndexV2()
         {
             var query = new GetAllItemsRequest();
-            var item = await _mediator.Send(query);
+            var item = await _mediator.Send(query, _cts.Token);
             return Ok(item);
         }
 
         [MapToApiVersion(1)]
         [HttpGet("{id}")]
-        public async Task<IActionResult> Index(int id)
+        public async Task<IActionResult> Index(long id)
         {
             var query = new GetItemByIdRequest { Id = id };
-            var validationResult = await _validatorGetItem.ValidateAsync(query);
+            var validationResult = await _validatorGetItem.ValidateAsync(query, _cts.Token);
             if (!validationResult.IsValid)
             {
                 return BadRequest(validationResult.Errors);
@@ -133,7 +141,7 @@ namespace NetCoreBase.API.Controllers
                 return BadRequest(validationResult.Errors);
             }
 
-            var response = await _mediator.Send(request);
+            var response = await _mediator.Send(request, _cts.Token);
             return Ok(response);
         }
     }

@@ -13,7 +13,7 @@ namespace NetCoreBase.Application.Features.Items.Queries.GetItemById
         /// <summary>
         /// Item id
         /// </summary>
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// Get item by id handler busines logic, consumes item repository service
@@ -48,7 +48,7 @@ namespace NetCoreBase.Application.Features.Items.Queries.GetItemById
             /// <returns></returns>
             public async Task<OperationResponse<GetItemByIdResponse>> Handle(GetItemByIdRequest request, CancellationToken cancellationToken)
             {
-                var item = await _repository.GetByIdAsync(request.Id);
+                var item = await _repository.GetByIdAsyncNoTracking(request.Id, cancellationToken);
 
                 var data = _mapper.Map<GetItemByIdResponse>(item);
 

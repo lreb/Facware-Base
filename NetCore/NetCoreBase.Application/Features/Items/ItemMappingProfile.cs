@@ -33,7 +33,10 @@ namespace NetCoreBase.Application.Features.Items
                 .ForMember(dest => dest.LastModifiedBy, opt => opt.MapFrom(src => src.UpdatedBy));
             // Add
             CreateMap<AddItemRequest, Item>()
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name));
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src=>src.Description))
+                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price))
+                ;
             CreateMap<Item, AddItemResponse>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Create, opt => opt.MapFrom(src => src.CreatedAt));

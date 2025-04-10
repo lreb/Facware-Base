@@ -1,13 +1,9 @@
+using NetCoreBase.Domain.Entities;
+using System.Linq.Expressions;
+
 namespace NetCoreBase.Domain.Interfaces.Common
 {
-    /// <summary>
-    ///  
-    /// </summary>
-    /// <typeparam name="T"></typeparam> <summary>
-    /// 
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public interface IRepository<T>
+    public interface IRepositoryRead<T>
     {
         /// <summary>
         /// Get all entities async
@@ -15,13 +11,23 @@ namespace NetCoreBase.Domain.Interfaces.Common
         /// <returns>
         /// <see cref="IEnumerable{T}"/>
         /// </returns>
-        Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken);
+        Task<IEnumerable<T>> GetAllAsync(Expression<Func<Item, bool>> predicate, CancellationToken cancellationToken);
         /// <summary>
         /// Get entity by id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<T> GetByIdAsync(int id);
+        Task<T> GetByIdAsync(long id, CancellationToken cancellationToken);
+        /// <summary>
+        /// Get entity by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<T> GetByIdAsyncNoTracking(long id, CancellationToken cancellationToken);
+    }
+
+    public interface IRepositoryCreate<T> 
+    {
         /// <summary>
         /// Add entity async
         /// </summary>
@@ -32,18 +38,20 @@ namespace NetCoreBase.Domain.Interfaces.Common
         /// <see cref="T"/>
         /// </returns>
         Task<T> AddAsync(T entity);
+    }
+
+    public interface IRepositoryUpdate<T>
+    {
         /// <summary>
         /// Update entity async
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
         Task<T> UpdateAsync(T entity);
-        /// <summary>
-        ///  Delete entity async
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        Task<bool> DeleteAsync(int id);
+    }
+
+    public interface IRepositoryPaginated<T>
+    {
         /// <summary>
         /// Get paged entities async
         /// </summary>
@@ -56,6 +64,28 @@ namespace NetCoreBase.Domain.Interfaces.Common
         /// <param name="pageNumber"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        Task<(IEnumerable<T> Entities, int TotalCount)> GetPagedAsync(int pageNumber, int pageSize);
+        Task<(IEnumerable<T> Entities, int TotalCount)> GetPagedAsync(int pageNumber, int pageSize, CancellationToken cancellationToken);
+    }
+
+    public interface IRepositoryDelete<T>
+    {
+        /// <summary>
+        ///  Delete entity async
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<bool> DeleteAsync(long id);
+    }
+
+    /// <summary>
+    ///  
+    /// </summary>
+    /// <typeparam name="T"></typeparam> <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public interface IRepository<T> : IRepositoryRead<T>, IRepositoryCreate<T>, IRepositoryUpdate<T>, IRepositoryDelete<T>, IRepositoryPaginated<T>
+        where T : class
+    {        
     }
 }
