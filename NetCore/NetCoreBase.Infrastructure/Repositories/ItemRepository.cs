@@ -15,7 +15,7 @@ namespace NetCoreBase.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Item>> GetAllAsync(Expression<Func<Item, bool>> predicate, CancellationToken cancellationToken)
+        public async Task<IEnumerable<Item>> GetAllAsyncAsNoTracking(Expression<Func<Item, bool>> predicate, CancellationToken cancellationToken)
         {
             return await _context.Items
                 .AsNoTracking()
@@ -30,25 +30,25 @@ namespace NetCoreBase.Infrastructure.Repositories
         /// <returns>Items<see cref="Item"/></returns>
         public async Task<Item> GetByIdAsync(long id, CancellationToken cancellationToken)
         {
-            var item = await _context.Items.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
-            if (item == null)
-            {
-                throw new Exception($"{typeof(Item)} with id {id} not found.");
-                //throw new NotFoundException($"{typeof(Item)} with id {id} not found.");
-                //throw new OperationResponse().NotFoundOperation($"{typeof(Item)} with id {id} not found.");
-            }
+            Item? item = await _context.Items.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+            //if (item == null)
+            //{
+            //    throw new Exception($"{typeof(Item)} with id {id} not found.");
+            //    //throw new NotFoundException($"{typeof(Item)} with id {id} not found.");
+            //    //throw new OperationResponse().NotFoundOperation($"{typeof(Item)} with id {id} not found.");
+            //}
             return item;
         }
 
         public async Task<Item> GetByIdAsyncNoTracking(long id, CancellationToken cancellationToken)
         {
             var item = await _context.Items.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
-            if (item == null)
-            {
-                throw new Exception($"{typeof(Item)} with id {id} not found.");
-                //throw new NotFoundException($"{typeof(Item)} with id {id} not found.");
-                //throw new OperationResponse().NotFoundOperation($"{typeof(Item)} with id {id} not found.");
-            }
+            //if (item == null)
+            //{
+            //    throw new Exception($"{typeof(Item)} with id {id} not found.");
+            //    //throw new NotFoundException($"{typeof(Item)} with id {id} not found.");
+            //    //throw new OperationResponse().NotFoundOperation($"{typeof(Item)} with id {id} not found.");
+            //}
             return item;
         }
 

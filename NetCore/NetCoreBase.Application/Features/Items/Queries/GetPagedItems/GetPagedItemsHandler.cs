@@ -2,9 +2,6 @@ using AutoMapper;
 using MediatR;
 using NetCoreBase.Application.Features.Items.Queries.GetItemById;
 using NetCoreBase.Domain.Interfaces;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace NetCoreBase.Application.Features.Items.Queries.GetPagedItems
 {

@@ -11,7 +11,12 @@ namespace NetCoreBase.API.Extensions
         public static IServiceCollection AddDependencyInjectionReferences(this IServiceCollection services)
         {
             // register all DI services here
+            /// different instances created on each request
+            services.AddTransient<IItemRepository, ItemRepository>();
+            /// one instance per client connection
             services.AddScoped<IItemRepository, ItemRepository>();
+            /// same instace used for all requests
+            services.AddSingleton<IItemRepository, ItemRepository>();
 
             return services;
         }

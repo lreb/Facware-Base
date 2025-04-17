@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
+using Grpc.Core;
 using MediatR;
 using NetCoreBase.Domain.Common;
+using NetCoreBase.Domain.Entities;
+using NetCoreBase.Domain.Enum;
 using NetCoreBase.Domain.Interfaces;
 
 namespace NetCoreBase.Application.Features.Items.Queries.GetItemById
@@ -8,7 +11,7 @@ namespace NetCoreBase.Application.Features.Items.Queries.GetItemById
     /// <summary>
     /// Get item by id request object
     /// </summary>
-    public class GetItemByIdRequest : IRequest<OperationResponse<GetItemByIdResponse>>
+    public record GetItemByIdRequest : IRequest<GetItemByIdResponse>
     {
         /// <summary>
         /// Item id
@@ -18,7 +21,7 @@ namespace NetCoreBase.Application.Features.Items.Queries.GetItemById
         /// <summary>
         /// Get item by id handler busines logic, consumes item repository service
         /// </summary>
-        public class GetByIdItemHandler : IRequestHandler<GetItemByIdRequest, OperationResponse<GetItemByIdResponse>>
+        public class GetByIdItemHandler : IRequestHandler<GetItemByIdRequest, GetItemByIdResponse>
         {
             /// <summary>
             /// AutoMapper instance
@@ -46,15 +49,17 @@ namespace NetCoreBase.Application.Features.Items.Queries.GetItemById
             /// <param name="request"></param>
             /// <param name="cancellationToken"></param>
             /// <returns></returns>
-            public async Task<OperationResponse<GetItemByIdResponse>> Handle(GetItemByIdRequest request, CancellationToken cancellationToken)
+            public async Task<GetItemByIdResponse> Handle(GetItemByIdRequest request, CancellationToken cancellationToken)
             {
                 var item = await _repository.GetByIdAsyncNoTracking(request.Id, cancellationToken);
+                //_ = item ?? throw new KeyNotFoundException($"{nameof(Item)} with id {request.Id} not found.");
+                
+                return _mapper.Map<GetItemByIdResponse>(item);
 
-                var data = _mapper.Map<GetItemByIdResponse>(item);
-
-                var result = new OperationResponse<GetItemByIdResponse>().SuccessOperation(data, "Item retrieved successfully");
-
-                return result;
+                //if(item is null) 
+                //    return new OperationResponse<GetItemByIdResponse>().WarningOperation(data, (int)CoreHttpStatusCode.NotFound, $"{typeof(Item)} Not found");
+                //else
+                //    return new OperationResponse<GetItemByIdResponse>().SuccessOperation(data, (int)CoreHttpStatusCode.NotFound, $"{typeof(Item)} successfully");
             }
         }
     }
