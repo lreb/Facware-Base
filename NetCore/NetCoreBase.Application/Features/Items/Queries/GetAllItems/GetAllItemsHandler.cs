@@ -8,7 +8,7 @@ using NetCoreBase.Domain.Interfaces;
 namespace NetCoreBase.Application.Features.Items.Queries.GetAllItems
 {
     // Handler class
-    public class GetAllItemsHandler : IRequestHandler<GetAllItemsRequest, OperationResponse<IEnumerable<GetAllItemsResponse>>>
+    public class GetAllItemsHandler : IRequestHandler<GetAllItemsRequest, IEnumerable<GetAllItemsResponse>>
     {
         /// <summary>
             /// AutoMapper instance
@@ -26,7 +26,7 @@ namespace NetCoreBase.Application.Features.Items.Queries.GetAllItems
             _repository = itemRepository;
         }
 
-        public async Task<OperationResponse<IEnumerable<GetAllItemsResponse>>> Handle(GetAllItemsRequest request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<GetAllItemsResponse>> Handle(GetAllItemsRequest request, CancellationToken cancellationToken)
         {
             try
             {
@@ -34,10 +34,11 @@ namespace NetCoreBase.Application.Features.Items.Queries.GetAllItems
                 // You can also use a more complex predicate if needed
                 Expression<Func<Item, bool>> predicate = item => item.IsActive && item.Price > 0;
                 
-                var items = await _repository.GetAllAsync(predicate, cancellationToken);
+                var items = await _repository.GetAllAsyncAsNoTracking(predicate, cancellationToken);
                 var data = _mapper.Map<IEnumerable<GetAllItemsResponse>>(items);
-                var result = new OperationResponse<IEnumerable<GetAllItemsResponse>>().SuccessOperation(data, "Items retrieved successfully");
-                return result;
+                //var result = new OperationResponse<IEnumerable<GetAllItemsResponse>>()
+                //    .SuccessOperation(data ?? Enumerable.Empty<GetAllItemsResponse>(), 404, "Items retrieved successfully");
+                return data;
             }
             catch (OperationCanceledException ex)
             {

@@ -8,6 +8,8 @@ using NetCoreBase.Application.Features.Items.Commands.UpdateItem;
 using NetCoreBase.Application.Features.Items.Commands.DeleteItem;
 using NetCoreBase.Application.Features.Items.Queries.GetPagedItems;
 using Asp.Versioning;
+using NetCoreBase.Domain.Common;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace NetCoreBase.API.Controllers
 {
@@ -15,8 +17,6 @@ namespace NetCoreBase.API.Controllers
     [ApiVersion("2.0")]
     [Route("api/v{version:apiVersion}/items")]
     [ApiController]
-    //[Route("[controller]")]
-    //[Route("items")]
     public class ItemController : ControllerBase
     {
         private IMediator _mediator;
@@ -51,7 +51,7 @@ namespace NetCoreBase.API.Controllers
 
         [MapToApiVersion(1)]
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> GetItems()
         {
             var query = new GetAllItemsRequest();
             var item = await _mediator.Send(query, _cts.Token);
@@ -60,11 +60,21 @@ namespace NetCoreBase.API.Controllers
 
         [MapToApiVersion(2)]
         [HttpGet]
-        public async Task<IActionResult> IndexV2()
+        public Task<IActionResult> GetItemsWithException()
         {
-            var query = new GetAllItemsRequest();
-            var item = await _mediator.Send(query, _cts.Token);
-            return Ok(item);
+            // Simulate an exception
+            throw new ArithmeticException("MAth exception dummy");
+            throw new InvalidOperationException("This is a test exception.", new Exception() 
+            {
+                //Message = "This is an inner exception.",
+                Source = "InnerExceptionSource",
+                //StackTrace = "InnerExceptionStackTrace",
+                HelpLink = "InnerExceptionHelpLink",
+                Data = { { "Key", "Value" } },
+                HResult = 12345,
+                //TargetSite = typeof(ItemController).GetMethod(nameof(GetItemsWithException)),
+                //InnerException = new Exception("This is an inner exception.")
+            });
         }
 
         [MapToApiVersion(1)]
@@ -77,7 +87,17 @@ namespace NetCoreBase.API.Controllers
             {
                 return BadRequest(validationResult.Errors);
             }
-            var item = await _mediator.Send(query);
+            GetItemByIdResponse item = await _mediator.Send(query);
+            if (item is null)
+            {
+                return NotFound(
+                    new OperationResponse<GetItemByIdResponse>()
+                    .WarningOperation(item, StatusCodes.Status404NotFound,
+                    $"Record not found",
+                    $"{typeof(GetItemByIdRequest)} not found")
+                    );
+
+            }
             return Ok(item);
         }
 
@@ -91,7 +111,7 @@ namespace NetCoreBase.API.Controllers
                 return BadRequest(validationResult.Errors);
             }
             var item = await _mediator.Send(request);
-            return CreatedAtAction(nameof(Index), new { id = item.Id }, item);
+            return CreatedAtAction(nameof(Index), new { id = item.Id },item);
         }
 
         [MapToApiVersion(1)]
@@ -100,7 +120,8 @@ namespace NetCoreBase.API.Controllers
         {
             if (id != request.Id)
             {
-                return BadRequest("The ID in the URL does not match the ID in the request body.");
+                return BadRequest(new OperationResponse<object>().WarningOperation(default,StatusCodes.Status400BadRequest,
+                    $"Id {id} doesn't match with {request.Id}"));
             }
             var validationResult = await _validatorUpdateItem.ValidateAsync(request);
             if (!validationResult.IsValid)
@@ -122,10 +143,22 @@ namespace NetCoreBase.API.Controllers
                 return BadRequest(validationResult.Errors);
             }
 
+            var query = new GetItemByIdRequest { Id = id };
+            GetItemByIdResponse item = await _mediator.Send(query);
+            if (item is null)
+            {
+                return NotFound(
+                    new OperationResponse<GetItemByIdResponse>()
+                    .WarningOperation(item, StatusCodes.Status404NotFound,
+                    $"Record not found",
+                    $"{typeof(GetItemByIdRequest)} not found")
+                    );
+            }
+
             var response = await _mediator.Send(request);
             if (!response.IsDeleted)
             {
-                return NotFound();
+                return Conflict();
             }
 
             return NoContent();

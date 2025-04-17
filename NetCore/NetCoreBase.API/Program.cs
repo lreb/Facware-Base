@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using NetCoreBase.API.ActionFilter;
 using NetCoreBase.API.Extensions;
+using NetCoreBase.API.Middleware;
 using NetCoreBase.Infrastructure.Data.Postgresql;
 
 namespace NetCoreBase.API
@@ -14,8 +16,29 @@ namespace NetCoreBase.API
             builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
                 .AddEnvironmentVariables();
+
+            //builder.Logging.ClearProviders();
+            //builder.Logging.AddConsole();
+            //builder.Logging.AddDebug();
+            //builder.Logging.AddEventSourceLogger();
+            //builder.Logging.AddFile(builder.Configuration.GetSection("Logging:File"));
+            //builder.Logging.AddConfiguration(builder.Configuration.GetSection("Logging"));
+
+            // Add logging (default configuration includes console logging)
+            builder.Services.AddLogging(logging =>
+            {
+                logging.AddConsole(); // Logs to console
+                logging.AddDebug();   // Logs to debug output
+                                      // Optionally add other providers, e.g., file or external services
+                                      // logging.AddFile("logs/app.log"); // Requires a third-party package
+            });
+
+
             // Add services to the container.
-            builder.Services.AddControllers();
+            builder.Services.AddControllers(option=> 
+            {
+                option.Filters.Add<StatusCodeWrapperFilter>(); // Add the custom action filter globally
+            });
 
             // Add versioning
             builder.Services.AddAspApiVersioning();
@@ -49,6 +72,9 @@ namespace NetCoreBase.API
 
             var app = builder.Build();
 
+            
+
+            app.Logger.LogInformation("Adding Swagger");
             // Configure the HTTP request pipeline.
             if (app.Environment.IsLocal())
             {
@@ -75,8 +101,10 @@ namespace NetCoreBase.API
             }
 
             app.UseHttpsRedirection();
-
+            app.Logger.LogInformation("Adding CORS");
             app.UseCors("AllowSpecificOrigins");
+
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseAuthorization();
 

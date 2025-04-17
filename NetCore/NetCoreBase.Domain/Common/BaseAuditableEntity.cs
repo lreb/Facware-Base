@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace NetCoreBase.Domain.Common
+﻿namespace NetCoreBase.Domain.Common
 {
     /// <summary>
     /// Implements the base auditable entity to identify the created and last modified date and user

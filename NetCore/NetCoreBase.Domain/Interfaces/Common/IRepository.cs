@@ -11,7 +11,7 @@ namespace NetCoreBase.Domain.Interfaces.Common
         /// <returns>
         /// <see cref="IEnumerable{T}"/>
         /// </returns>
-        Task<IEnumerable<T>> GetAllAsync(Expression<Func<Item, bool>> predicate, CancellationToken cancellationToken);
+        Task<IEnumerable<T>> GetAllAsyncAsNoTracking(Expression<Func<Item, bool>> predicate, CancellationToken cancellationToken);
         /// <summary>
         /// Get entity by id
         /// </summary>

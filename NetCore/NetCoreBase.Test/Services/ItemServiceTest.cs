@@ -20,7 +20,7 @@ namespace NetCoreBase.Test.Services
         public async Task GetAllItems()
         {
             Expression<Func<Item, bool>> predicate = item => item.IsActive && item.Price > 0;
-            var items = await _repository.GetAllAsync(predicate, default);
+            var items = await _repository.GetAllAsyncAsNoTracking(predicate, default);
             Assert.NotNull(items);
         }
 
@@ -67,17 +67,5 @@ namespace NetCoreBase.Test.Services
             var updatedItem = _repository.UpdateAsync(item);
             Assert.NotNull(updatedItem);
         }
-
-        //public async Task InitializeAsync()
-        //{
-        //    _id = 0;
-        //    await Task.CompletedTask;
-        //}
-
-        //public async Task DisposeAsync()
-        //{
-        //    var delete = await _repository.DeleteAsync(_id);
-        //    Assert.True(delete);
-        //}
     }
 }
